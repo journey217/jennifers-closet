@@ -10,6 +10,11 @@ def home():
     return render_template('home-page.html')
 
 
+@app.route('/wish-list.html')
+def wish():
+    return render_template('wish-list.html')
+
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
