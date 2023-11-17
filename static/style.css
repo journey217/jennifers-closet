@@ -1,6 +1,6 @@
 #homepage {
-    background-image: url("../static/real-jennifers-closet-dark.jpg");
     /*background-color: #db8dbd;*/
+    background-image: url("../static/real-jennifers-closet-dark.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
@@ -91,4 +91,18 @@ a:link {
 
 .button2 {
     margin: 620px;
+}
+
+.button4 {border-radius: 12px;}
+
+.buttonlist {
+  background-color: #FFFF00FF;
+  border: none;
+  color: #000000;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
 }
