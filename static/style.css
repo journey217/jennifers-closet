@@ -1,6 +1,7 @@
 #homepage {
-    /*background-color: #db8dbd;*/
-    background-image: url("../static/real-jennifers-closet-dark.jpg");
+    /*background-color: #8a6c7a;*/
+    /*background-image: url("../static/real-jennifers-closet-dark.jpg");*/
+    background-image: url("../static/floral2.png");
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
@@ -13,6 +14,8 @@
 }
 
 #header {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
     font-family: "Optima", sans-serif;
     font-size: 72px;
     font-weight: bold;
@@ -96,7 +99,7 @@ a:link {
 .button4 {border-radius: 12px;}
 
 .buttonlist {
-  background-color: #FFFF00FF;
+  background-color: #db8dbd;
   border: none;
   color: #000000;
   padding: 20px;
