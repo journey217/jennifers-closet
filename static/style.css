@@ -114,3 +114,7 @@ a:link {
 .header-title {
     text-decoration: underline;
 }
+
+.iframe {
+    pointer-events:none;
+}
