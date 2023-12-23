@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Page</title>
+    <script src="../scripts.js"></script>
+</head>
+<body onload="fetch_data()">
+
+<fieldset>
+<p id="about-us-raw"></p>
+<br/>
+<p id="about-us-p"></p>
+<br/>
+</fieldset>
+
+<br/>
+
+<fieldset>
+<p id="appointments-raw"></p>
+<br/>
+<p id="appointments-p"></p>
+<br/>
+</fieldset>
+
+<br/>
+
+<fieldset>
+<p id="donations-raw"></p>
+<br/>
+<p id="donations-p"></p>
+<br/>
+</fieldset>
+
+<br/>
+
+<fieldset>
+<p id="volunteering-raw"></p>
+<br/>
+<p id="volunteering-p"></p>
+<br/>
+</fieldset>
+
+<br/>
+
+
+<form action="/update-text" method="post">
+    <fieldset>
+        <label for="about-us">About Us</label>
+        <textarea id="about-us" name="about-us"></textarea>
+        <br/>
+        <label for="appointments">Appointments</label>
+        <textarea id="appointments" name="appointments"></textarea>
+        <br/>
+        <label for="donations">Donations</label>
+        <textarea id="donations" name="donations"></textarea>
+        <br/>
+        <label for="volunteering">Volunteering</label>
+        <textarea id="volunteering" name="volunteering"></textarea>
+        <br/>
+        <br/>
+        <button type="submit">Submit</button>
+    </fieldset>
+</form>
+
+</body>
+</html>
