@@ -4,6 +4,37 @@
     <meta charset="UTF-8">
     <title>Edit Page</title>
     <script src="../scripts.js"></script>
+
+        <script src="https://cdn.tiny.cloud/1/1m19ptn6diaporcmzl0jzc78rbk9fz2xepavf17q0g61sjsb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#about-us',
+          plugins: 'code',
+          toolbar: 'undo redo | styles | bold italic forecolor | alignleft aligncenter alignright alignjustify | outdent indent'
+      });
+    </script>
+    <script>
+      tinymce.init({
+        selector: '#appointments',
+          plugins: 'code',
+          toolbar: 'undo redo | styles | bold italic forecolor | alignleft aligncenter alignright alignjustify | outdent indent'
+      });
+    </script>
+    <script>
+      tinymce.init({
+        selector: '#donations',
+          plugins: 'code',
+          toolbar: 'undo redo | styles | bold italic forecolor | alignleft aligncenter alignright alignjustify | outdent indent'
+      });
+    </script>
+    <script>
+      tinymce.init({
+        selector: '#volunteering',
+          plugins: 'code',
+          toolbar: 'undo redo | styles | bold italic forecolor | alignleft aligncenter alignright alignjustify | outdent indent'
+      });
+    </script>
+
 </head>
 <body onload="fetch_data()">
 

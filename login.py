@@ -4,7 +4,6 @@ from hashlib import sha256
 from base64 import b64encode
 from secrets import randbits
 
-
 mongo_client = MongoClient("mongo")
 db = mongo_client["JennifersCloset"]
 account_collection = db["Accounts"]
@@ -20,9 +19,9 @@ about_us = "Jennifer&#39;s Closet is a volunteer project of Bethany Presbyterian
            "<b>We do not serve thrifters or resellers.</b>"
 
 appointments = "<b><span id='hours'> We offer appointments Mondays and Thursdays from 9:30 a.m. to 12 p.m.</span></b> " \
-                               "Please submit your name, email, and phone number to book an appointment. You can also email us at" \
-            "<a href='mailto:jennifersclosetny@gmail.com?subject=Donation Appointment'>jennifersclosetny@gmail.com</a>" \
-            "to request additional information."
+               "Please submit your name, email, and phone number to book an appointment. You can also email us at " \
+               "<a href='mailto:jennifersclosetny@gmail.com?subject=Donation Appointment'>jennifersclosetny@gmail.com</a> " \
+               "to request additional information."
 
 donations = "To donate clothing please email us at <a href='mailto:jennifersclosetny@gmail.com?subject=Donation Appointment'>jennifersclosetny@gmail.com</a>" \
             " to schedule your drop off. <br/>" \
@@ -38,7 +37,9 @@ volunteer = "If you are looking to help out in the clothing closet, we are looki
 def test_data():
     text_collections.delete_many({})
     account_collection.delete_many({})
-    text_collections.insert_one({"data": 1, "about_us_data": about_us, "appointments_data": appointments, "donations_data": donations, "volunteering_data": volunteer})
+    text_collections.insert_one(
+        {"data": 1, "about_us_data": about_us, "appointments_data": appointments, "donations_data": donations,
+         "volunteering_data": volunteer})
 
 
 def check_username_exists(username):
