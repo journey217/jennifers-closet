@@ -88,7 +88,7 @@ a:link {
 
 .form-sub {
     margin: auto;
-    width: 750px;
+    width: 90%;
 }
 
 .button2 {
@@ -159,6 +159,7 @@ a:link {
 
 .panel_bar {
     text-align: center;
+    width: 100%;
 }
 
 #myBtn {
