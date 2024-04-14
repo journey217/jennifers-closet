@@ -11,14 +11,17 @@ function fetch_data() {
 }
 
 function add_data(form_data) {
-    let about_us = document.getElementById('about-us-p')
-    let donations = document.getElementById('donations-p')
-    let appointments = document.getElementById('appointments-p')
-    let volunteering = document.getElementById('volunteering-p')
-    let about_us_raw = document.getElementById('about-us-raw')
-    let donations_raw = document.getElementById('donations-raw')
-    let appointments_raw = document.getElementById('appointments-raw')
-    let volunteering_raw = document.getElementById('volunteering-raw')
+    let appsDiv = document.getElementById("appointments-div");
+    let appsButton = document.getElementById("apps-button");
+    let about_us = document.getElementById('about-us-p');
+    let donations = document.getElementById('donations-p');
+    let appointments = document.getElementById('appointments-p');
+    let volunteering = document.getElementById('volunteering-p');
+    let about_us_raw = document.getElementById('about-us-raw');
+    let donations_raw = document.getElementById('donations-raw');
+    let appointments_raw = document.getElementById('appointments-raw');
+    let volunteering_raw = document.getElementById('volunteering-raw');
+    let AppsBool = form_data['showAppsBool'];
     if (about_us !== null) {
         about_us.innerHTML = form_data['about_us_data']
     }
@@ -42,6 +45,12 @@ function add_data(form_data) {
     }
     if (volunteering_raw !== null) {
         volunteering_raw.innerText = form_data['volunteering_data']
+    }
+    if (appsDiv !== null && appsButton !== null) {
+        if (AppsBool === "Yes") {
+            appsDiv.style.display = "block";
+            appsButton.style.display = "inline-block";
+        }
     }
 }
 

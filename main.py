@@ -65,6 +65,10 @@ def fetch_pages():
     text = text_collections.find_one({"data": 1}, projection={"_id": False, "ID": False})
     ret = {"about_us_data": text['about_us_data'], "donations_data": text['donations_data'],
            "volunteering_data": text['volunteering_data'], "appointments_data": text['appointments_data']}
+    if "showAppsBool" in text.keys():
+        ret["showAppsBool"] = text["showAppsBool"]
+    else:
+        ret["showAppsBool"] = "No"
     response = jsonify(ret)
     return response
 
@@ -78,8 +82,12 @@ def update():
         backups_collection.insert_one({"about_us_data": text['about_us_data'], "donations_data": text['donations_data'],
                                        "volunteering_data": text['volunteering_data'],
                                        "appointments_data": text['appointments_data']})
+
+        showAppsBool = request.form['showAppSelect']
         about_us_v = request.form['about-us']
         changes = {}
+        if showAppsBool != "":
+            changes['showAppsBool'] = showAppsBool
         if about_us_v != "":
             changes['about_us_data'] = about_us_v
         appointments_v = request.form['appointments']
@@ -117,27 +125,13 @@ def register():
     return redirect('/')
 
 
-about_us = "Jennifer&#39;s Closet is a volunteer project of Bethany Presbyterian " \
-           "Church established by a neighborhood mom, named Jennifer, " \
-           "in 2023. We offer gently used clothing in sizes infant to 3X, free " \
-           "of charge for Greece families in need. We are located in the " \
-           "church at 3000 Dewey Ave. (just north of Stone Rd.)<br> " \
-           "<b>We do not serve thrifters or resellers.</b>"
+about_us = "<p>Jennifer's Closet is a volunteer project being housed at Bethany Presbyterian Church. It was established by a neighborhood mom, named Jennifer, in 2023. We offer gently used clothing in sizes infant to 3X, free of charge for Greece families in need. We are located in the church at 3000 Dewey Ave. (just north of Stone Rd.)<br><strong>We do not serve thrifters or resellers.</strong></p>"
 
-appointments = "<b><span id='hours'> We offer appointments Mondays and Thursdays from 9:30 a.m. to 12 p.m.</span></b> " \
-               "Please submit your name, email, and phone number to book an appointment. You can also email us at " \
-               "<a href='mailto:jennifersclosetny@gmail.com?subject=Donation Appointment'>jennifersclosetny@gmail.com</a> " \
-               "to request additional information."
+appointments = '<p><strong><span id="hours"> We offer appointments Tuesdays from 1 p.m. to 3 p.m. and Thursdays from 9:30 a.m. to 12 p.m.</span></strong> Please submit your name, email, and phone number to book an appointment. You can also email us at <a href="mailto:jennifersclosetny@gmail.com?subject=Donation Appointment">jennifersclosetny@gmail.com</a> to request additional information.</p>'
 
-donations = "To donate clothing please email us at <a href='mailto:jennifersclosetny@gmail.com?subject=Donation Appointment'>jennifersclosetny@gmail.com</a>" \
-            " to schedule your drop off. <br/>" \
-            "<b>We ask that all donations are not stained, damaged, or worn-out clothing.</b> <br/>" \
-            "If you would like to make a financial contribution to support our project, please make the checks payable to " \
-            "Bethany Presbyterian Church with 'Clothing Closet' on the memo, 3000 Dewey Ave., Rochester, NY 14616."
+donations = "To donate clothing please email us at <a href='mailto:jennifersclosetny@gmail.com?subject=Donation Appointment'>jennifersclosetny@gmail.com</a> to schedule your drop off. <br/><b>We ask that all donations are not stained, damaged, or worn-out clothing.</b> <br/>If you would like to make a financial contribution to support our project, please make the checks payable to Bethany Presbyterian Church with 'Clothing Closet' on the memo, 3000 Dewey Ave., Rochester, NY 14616."
 
-volunteer = "If you are looking to help out in the clothing closet, we are looking for people to help sort donations, " \
-            "replenish clothing racks, and more. <br/> " \
-            "<b>Please email us at <a href='mailto:jennifersclosetny@gmail.com?subject=Donation Appointment'>jennifersclosetny@gmail.com</a> to find a time to volunteer. </b>"
+volunteer = "If you are looking to help out in the clothing closet, we are looking for people to help sort donations, replenish clothing racks, and more. <br/> <b>Please email us at <a href='mailto:jennifersclosetny@gmail.com?subject=Donation Appointment'>jennifersclosetny@gmail.com</a> to find a time to volunteer. </b>"
 
 
 def test_data():

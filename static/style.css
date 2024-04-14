@@ -35,7 +35,8 @@
 
 .about-us {
     padding: 20px;
-    margin: auto;
+    margin-inline: auto;
+    margin-bottom: 20px;
     text-align: left;
     width: 70%;
     font-family: "Optima", sans-serif;
@@ -125,7 +126,8 @@ a:link {
 }
 
 .slideshow {
-    margin: auto;
+    margin-inline: auto;
+    margin-bottom: 20px;
     width: 70%;
     outline: #db8dbd ridge 9px;
     background-color: white;
@@ -174,4 +176,12 @@ a:link {
 #myBtn:hover {
     color: white;
   background-color: #555; /* Add a dark-grey background on hover */
+}
+
+#appointments-div {
+    display: none;
+}
+
+#apps-button {
+    display: none;
 }
