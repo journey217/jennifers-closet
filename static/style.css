@@ -7,22 +7,181 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height:100%;
-    width:100%;
+    height: 100vh;
+    width: 100vw;
+}
+
+.max-button-wid {
+    max-width: 100%;
 }
 
 #header {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
     font-family: "Optima", sans-serif;
-    font-size: 72px;
     font-weight: bold;
-    margin: auto;
-    width: 50%;
-    padding: 50px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-inline: auto;
+    width: 80vw;
     color: white;
     text-align: center;
 }
+
+#myBtn2 {
+  position: fixed; /* Fixed/sticky position */
+  bottom: 10px; /* Place the button at the bottom of the page */
+  right: 10px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #db8dbd; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.button4 {border-radius: 12px;}
+
+.buttonlist {
+    background-color: #db8dbd;
+    border-width: thin;
+    border-style: ridge;
+    border-color: black;
+    color: #000000;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    word-break: break-word;
+}
+
+.buttonlist:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+    color: white;
+}
+
+.iframe {
+    pointer-events:none;
+}
+
+.about-us1 {
+    margin: auto;
+    text-align: center;
+    font-family: "Optima", sans-serif;
+    outline: #db8dbd ridge 9px;
+    background-color: white;
+    font-size: 26px;
+    height: 800px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+@media (min-width: 1200px) { /* Web CSS */
+
+    #header {
+        font-size: 72px;
+    }
+
+    .sidenav {
+        display: none;
+    }
+
+    .buttonlist {
+        font-size: 20px;
+    }
+
+    #myBtn2 {
+        display: none;
+    }
+
+    .about-us1 {
+        width: 70%;
+    }
+
+}
+
+@media only screen and (max-width: 1199px) { /* Mobile CSS */
+
+    #header {
+        font-size: 45px;
+    }
+
+    .panel {
+        display: none;
+    }
+
+    .buttonlist {
+        font-size: 15px;
+    }
+
+    #myBtn {
+        display: none;
+    }
+
+    .about-us1 {
+        width: 70vw;
+    }
+
+}
+
+@media only screen and (max-width: 325px) { /* Stupid Galaxy Fold Width */
+
+    #header {
+        font-size: 30px;
+    }
+
+    .buttonlist {
+        font-size: 12px
+    }
+
+    #myBtn {
+        display: none;
+    }
+
+    .about-us1 {
+        width: 70vw;
+    }
+
+}
+
 
 .header-subtext {
     font-family: "Optima", sans-serif;
@@ -72,17 +231,6 @@ a:link {
     color: #674c5e;
 }
 
-.about-us1 {
-    margin: auto;
-    text-align: center;
-    width: 70%;
-    font-family: "Optima", sans-serif;
-    outline: #db8dbd ridge 9px;
-    background-color: white;
-    font-size: 26px;
-    height: 800px;
-}
-
 .button {
     margin: 25px;
 }
@@ -96,33 +244,8 @@ a:link {
     margin: 620px;
 }
 
-.button4 {border-radius: 12px;}
-
-.buttonlist {
-    background-color: #db8dbd;
-    border-width: thin;
-    border-style: ridge;
-    border-color: black;
-    color: #000000;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px;
-    margin: 4px 2px;
-}
-
-.buttonlist:hover {
-      background-color: #555; /* Add a dark-grey background on hover */
-    color: white;
-}
-
 .header-title {
     text-decoration: underline;
-}
-
-.iframe {
-    pointer-events:none;
 }
 
 .slideshow {
@@ -175,7 +298,7 @@ a:link {
 
 #myBtn:hover {
     color: white;
-  background-color: #555; /* Add a dark-grey background on hover */
+    background-color: #555; /* Add a dark-grey background on hover */
 }
 
 #appointments-div {
