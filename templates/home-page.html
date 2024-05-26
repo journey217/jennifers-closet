@@ -11,6 +11,7 @@
 
 <body id="homepage" onload="fetch_data()">
 <a id="myBtn" class="panel_button" href="#header">Top</a>
+<button id="myBtn2" class="panel_button" onclick="openNav()">Menu</button>
 <div id="header">
     Jennifer's Closet
 </div>
@@ -24,6 +25,16 @@
     <a class="panel_button" href="wish-list.html">Wishlist</a>
     <a class="panel_button" href="#contact-us">Contact Us</a>
     </div>
+</div>
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#about-us-title" onclick="closeNav()">About Us</a>
+    <a id="apps-button" href="#appointments-title" onclick="closeNav()">Appointments</a>
+    <a href="#events-title" onclick="closeNav()">Events</a>
+    <a href="#donations-title" onclick="closeNav()">Donations</a>
+    <a href="#volunteering-title" onclick="closeNav()">Volunteering</a>
+    <a href="wish-list.html" onclick="closeNav()">Wishlist</a>
+    <a href="#contact-us" onclick="closeNav()">Contact Us</a>
 </div>
 <br/>
 <div class="slideshow">
@@ -87,7 +98,7 @@
 </div>
 <br/>
 <div id="contact-us" class="header-subtext">
-    <button onclick="window.location.href='mailto:jennifersclosetny@gmail.com?subject=Book An Appointment'" class="buttonlist button4">Email Us: jennifersclosetny@gmail.com</button>
+    <button onclick="window.location.href='mailto:jennifersclosetny@gmail.com?subject=Book An Appointment'" class="buttonlist button4 max-button-wid">Email Us: jennifersclosetny@gmail.com</button>
 </div>
 <br/>
 <div id="disclaimer">
