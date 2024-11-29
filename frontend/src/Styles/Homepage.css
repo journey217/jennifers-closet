@@ -1,0 +1,16 @@
+.homepage_container {
+    width: 90vw;
+    height: fit-content;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.slideshow {
+    margin-inline: auto;
+    margin-bottom: 20px;
+    width: 70%;
+    outline: #8D3394 solid 3px;
+    background-color: white;
+}

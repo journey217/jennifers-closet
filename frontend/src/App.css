@@ -1,0 +1,50 @@
+.App {
+    background: #f6e6f0;
+    background-image: url("./assets/site_background_pink.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100vh;
+    min-height: fit-content;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.delius-regular {
+  font-family: "Delius", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.cookie-regular {
+  font-family: "Cookie", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.sidenav_container {
+    display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+
+    /*.navbar_container {*/
+    /*    display: none;*/
+    /*}*/
+
+    .sidenav_container {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
