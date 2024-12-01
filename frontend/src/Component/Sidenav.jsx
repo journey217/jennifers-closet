@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
-import {useNavigate} from "react-router-dom";
 
 const DropdownMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const navigate = useNavigate();
+    const goToHash = (location) => window.location.assign(location)
 
     const handleClick = (page) => {
         setIsOpen(false)
-        navigate(page)
+        goToHash(page)
     }
 
     const toggleMenu = () => {

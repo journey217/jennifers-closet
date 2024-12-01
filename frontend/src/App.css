@@ -35,6 +35,21 @@ body {
     display: none;
 }
 
+#disclaimer {
+    margin-inline: auto;
+    text-align: center;
+    width: 100%;
+    color: #ca0303;
+}
+
+#hours {
+    color: #0127bc;
+}
+
+a:hover, a:active, a:visited, a:link {
+    color: #952f70;
+}
+
 @media only screen and (max-width: 1024px) {
 
     /*.navbar_container {*/

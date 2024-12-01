@@ -5,12 +5,43 @@
     display: flex;
     flex-direction: column;
     gap: 50px;
+    /*padding-bottom: 50px;*/
 }
 
 .slideshow {
     margin-inline: auto;
     margin-bottom: 20px;
     width: 70%;
-    outline: #8D3394 solid 3px;
     background-color: white;
+}
+
+.homepage_button_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.homepage_button {
+    cursor: pointer;
+    font-size: clamp(1.5rem, 1vw, 2rem);
+    text-align: center;
+    margin-inline: auto;
+    padding: 20px;
+    background-color: #f6e6f0;
+    color: black;
+    border: 1px solid #952f70;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.45);
+    transition: background-color ease-in-out .3s, color ease-in-out .3s;
+}
+
+.homepage_button_container a:hover, .homepage_button_container a:active, .homepage_button_container a:visited, .homepage_button_container a:link {
+    color: black;
+    text-decoration: none;
+}
+
+.homepage_button:hover, .homepage_button_container a:hover {
+    background-color: #e1c1d5;
+    color: #571740;
+    text-decoration: underline;
 }

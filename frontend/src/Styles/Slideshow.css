@@ -2,7 +2,8 @@
 .slideshow_container {
     margin-inline: auto;
     width: 90vw;
-    max-width: 1000px;
+    border-radius: 5px;
+    max-width: 1200px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.87);
@@ -11,5 +12,5 @@
 .slideshow_image {
     width: 100%;
     transition: opacity 1s ease-in-out;
-    border-radius: 8px;
+    border-radius: 5px;
 }
