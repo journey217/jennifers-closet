@@ -2,3 +2,4 @@
 .serena
 database/database.db
 backend/venv
+frontend/package-lock.json
