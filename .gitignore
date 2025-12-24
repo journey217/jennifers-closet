@@ -1,4 +1,4 @@
 .idea
 .serena
-database.db
+database/database.db
 backend/venv

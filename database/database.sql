@@ -1,0 +1,51 @@
+--
+-- File generated with SQLiteStudio v3.4.13 on Tue Dec 23 23:33:51 2025
+--
+-- Text encoding used: UTF-8
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Table: active
+CREATE TABLE IF NOT EXISTS active (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT
+                      UNIQUE,
+    about     TEXT,
+    donate    TEXT,
+    volunteer TEXT
+);
+
+
+-- Table: backups
+CREATE TABLE IF NOT EXISTS backups (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT
+                      UNIQUE,
+    date      TEXT    DEFAULT (CURRENT_TIMESTAMP),
+    about     TEXT,
+    donate    TEXT,
+    volunteer TEXT
+);
+
+
+-- Table: users
+CREATE TABLE IF NOT EXISTS users (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT
+                            UNIQUE
+                            NOT NULL,
+    username        TEXT    UNIQUE
+                            NOT NULL,
+    hashed_password TEXT    NOT NULL
+);
+
+
+-- Table: wishlist
+CREATE TABLE IF NOT EXISTS wishlist (
+    id   INTEGER PRIMARY KEY AUTOINCREMENT
+                 NOT NULL
+                 UNIQUE,
+    item TEXT    NOT NULL
+);
+
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;
