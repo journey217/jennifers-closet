@@ -157,19 +157,19 @@ const Homepage = () => {
 
             {/* Wishlist Modal */}
             <Modal isOpen={isModalOpen} onClose={closeModal} title="Donation Wishlist">
-                <div className="wishlist-container">
-                    {wishlist.length > 0 ? (
-                        wishlist.map((item) => (
-                            <div key={item.id} className="wishlist-item">
+                {wishlist.length > 0 ? (
+                    <ul className="wishlist-list">
+                        {wishlist.map((item) => (
+                            <li key={item.id} className="wishlist-list-item">
                                 {item.item}
-                            </div>
-                        ))
-                    ) : (
-                        <div className="wishlist-empty">
-                            No items on the wishlist at this time.
-                        </div>
-                    )}
-                </div>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <div className="wishlist-empty">
+                        No items on the wishlist at this time.
+                    </div>
+                )}
             </Modal>
         </>
     )
