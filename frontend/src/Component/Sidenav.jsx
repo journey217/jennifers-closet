@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
+import { FiSun, FiMoon } from "react-icons/fi";
+import { useTheme } from "./ThemeContext.jsx";
 
 const DropdownMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { isDark, toggleTheme } = useTheme();
     
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
@@ -24,6 +27,10 @@ const DropdownMenu = () => {
         scrollToSection(sectionId)
     }
 
+    const handleThemeToggle = () => {
+        toggleTheme();
+    }
+
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
@@ -41,6 +48,17 @@ const DropdownMenu = () => {
                         <li onClick={e => handleClick("donations-title")}>DONATE</li>
                         <li onClick={e => handleClick("volunteering-title")}>VOLUNTEER</li>
                         <li onClick={e => handleClick("contact-us")}>CONTACT</li>
+                        <li className="sidenav_theme_toggle" onClick={handleThemeToggle}>
+                            {isDark ? (
+                                <>
+                                    <FiSun size={18} /> Light Mode
+                                </>
+                            ) : (
+                                <>
+                                    <FiMoon size={18} /> Dark Mode
+                                </>
+                            )}
+                        </li>
                     </ul>
                 )}
             </div>

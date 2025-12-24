@@ -11,6 +11,11 @@
   transition: all 0.3s ease;
 }
 
+.dark-mode .navbar_container {
+  background: rgba(26, 26, 26, 0.95);
+  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+}
+
 .navbar_content {
   width: 90vw;
   max-width: 1200px;
@@ -73,12 +78,52 @@
   white-space: nowrap;
 }
 
+.dark-mode .navbar_menu_list_item {
+  background: linear-gradient(135deg, rgba(45, 27, 46, 0.4) 0%, rgba(107, 91, 110, 0.2) 100%);
+  border-color: rgba(184, 74, 143, 0.3);
+}
+
 .navbar_menu_list_item:hover {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
   border-color: var(--primary);
   transform: translateY(-2px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .navbar_menu_list_item:hover {
+  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+}
+
+.navbar_theme_toggle {
+  padding: 0.75rem;
+  background: linear-gradient(135deg, rgba(233, 213, 255, 0.2) 0%, rgba(246, 230, 240, 0.2) 100%);
+  border: 1px solid rgba(149, 47, 112, 0.2);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: var(--text-dark);
+  flex-shrink: 0;
+}
+
+.dark-mode .navbar_theme_toggle {
+  background: linear-gradient(135deg, rgba(45, 27, 46, 0.4) 0%, rgba(107, 91, 110, 0.2) 100%);
+  border-color: rgba(184, 74, 143, 0.3);
+}
+
+.navbar_theme_toggle:hover {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .navbar_theme_toggle:hover {
+  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
 }
 
 .navbar_site_title_container {
@@ -95,6 +140,10 @@
   letter-spacing: 1px;
   transition: all 0.3s ease;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .site_title {
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
 }
 
 .site_title:hover {

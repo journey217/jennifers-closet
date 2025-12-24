@@ -1,8 +1,11 @@
 import {useNavigate} from "react-router-dom";
 import Sidenav from "./Sidenav.jsx";
+import { useTheme } from "./ThemeContext.jsx";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 const Navbar = () => {
     const navigate = useNavigate()
+    const { isDark, toggleTheme } = useTheme();
     
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
@@ -43,6 +46,13 @@ const Navbar = () => {
                     <div onClick={e => scrollToSection("contact-us")} className={"navbar_menu_list_item"}>
                         CONTACT
                     </div>
+                    <button 
+                        onClick={toggleTheme} 
+                        className={"navbar_theme_toggle"}
+                        aria-label="Toggle dark mode"
+                    >
+                        {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
+                    </button>
                 </div>
             </div>
         </div>

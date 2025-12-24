@@ -8,17 +8,20 @@ import "./Styles/Sidenav.css"
 import "./Styles/BodyText.css"
 import "./Styles/Calendar.css"
 import Homepage from "./Page/Homepage.jsx";
+import { ThemeProvider } from "./Component/ThemeContext.jsx";
 
 function App() {
 
     return (
-        <div className={"App"}>
-            <BrowserRouter>
-                <Routes>
-                    <Route element={<Homepage/>} path={"/"}/>
-                </Routes>
-            </BrowserRouter>
-        </div>
+        <ThemeProvider>
+            <div className={"App"}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route element={<Homepage/>} path={"/"}/>
+                    </Routes>
+                </BrowserRouter>
+            </div>
+        </ThemeProvider>
     )
 }
 

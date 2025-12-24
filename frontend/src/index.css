@@ -9,7 +9,7 @@
 }
 
 :root {
-  /* Color Palette */
+  /* Light Mode Color Palette */
   --primary: #952f70;
   --primary-dark: #571740;
   --primary-light: #E9D5FF;
@@ -28,6 +28,21 @@
   --font-script: 'Cookie', cursive;
 }
 
+/* Dark Mode Variables */
+.dark-mode {
+  --primary: #b84a8f;
+  --primary-dark: #952f70;
+  --primary-light: #2D1B2E;
+  --secondary: #CBD5E0;
+  --accent: #6B5B6E;
+  --bg-white: #1a1a1a;
+  --bg-light: #242424;
+  --text-dark: #E2E8F0;
+  --text-light: #CBD5E0;
+  --border: #3a3a3a;
+  --shadow: rgba(255, 255, 255, 0.1);
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -37,9 +52,11 @@ body {
   padding: 0;
   font-family: var(--font-body);
   color: var(--text-dark);
+  background-color: var(--bg-white);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Utility classes for fonts */
