@@ -3,11 +3,10 @@ from waitress import serve
 import sqlite3
 from flask_cors import CORS
 
-from main_old import volunteer
-
 app = Flask(__name__, static_url_path='', static_folder="react-build", template_folder='react-build')
 CORS(app, resources={r"/*": {"origins": "*"}})
 dbfile = 'database.db'
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -31,7 +30,6 @@ def get_data():
         except sqlite3.Error as e:
             print(e)
             return jsonify({"success": False, "message": e}), 500
-
 
 
 if __name__ == '__main__':
