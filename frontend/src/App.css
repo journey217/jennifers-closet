@@ -2,6 +2,11 @@
   background: linear-gradient(135deg, #F8F5F9 0%, #FAF5F8 50%, #F5F3F7 100%);
   min-height: 100vh;
   width: 100%;
+  transition: background 0.3s ease;
+}
+
+.dark-mode .App {
+  background: linear-gradient(135deg, #1a1a1a 0%, #242424 50%, #1e1e1e 100%);
 }
 
 body {
@@ -28,6 +33,10 @@ body {
 
 #hours {
   color: #0127bc;
+}
+
+.dark-mode #hours {
+  color: #6b9fff;
 }
 
 a {
