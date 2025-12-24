@@ -1,0 +1,17 @@
+# Database files
+database.db
+database.db-journal
+database.db-wal
+database.db-shm
+
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,16 @@
+{
+  "name": "jennifers-closet-database",
+  "version": "1.0.0",
+  "description": "Database initialization for Jennifer's Closet",
+  "main": "init-db.js",
+  "scripts": {
+    "init": "node init-db.js",
+    "reset": "node init-db.js --force"
+  },
+  "keywords": ["database", "sqlite"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^5.1.7"
+  }
+}
