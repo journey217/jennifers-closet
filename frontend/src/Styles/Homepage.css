@@ -129,7 +129,11 @@
     padding: 2rem 0;
   }
   
-  .wishlist-container {
-    grid-template-columns: 1fr;
+  .wishlist-list {
+    padding-left: 1.5rem;
+  }
+
+  .wishlist-list-item {
+    font-size: 0.9rem;
   }
 }
