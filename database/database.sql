@@ -7,12 +7,13 @@ PRAGMA foreign_keys = off;
 BEGIN TRANSACTION;
 
 -- Table: active
-CREATE TABLE IF NOT EXISTS active (
+CREATE TABLE active (
     id        INTEGER PRIMARY KEY AUTOINCREMENT
                       UNIQUE,
     about     TEXT,
     donate    TEXT,
-    volunteer TEXT
+    volunteer TEXT,
+    hours     TEXT
 );
 
 
