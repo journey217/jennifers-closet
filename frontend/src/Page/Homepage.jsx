@@ -139,7 +139,7 @@ const Homepage = () => {
             </div>
 
             {/* Footer with Stop Sign, Contact Info, and Address */}
-            <Footer />
+            <Footer hoursData={hoursData} />
         </>
     )
 }

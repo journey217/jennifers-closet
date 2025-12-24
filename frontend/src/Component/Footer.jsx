@@ -1,9 +1,9 @@
 import React from 'react';
 import StopSign from './StopSign.jsx';
-import { FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaEnvelope, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import '../Styles/Footer.css';
 
-const Footer = () => {
+const Footer = ({ hoursData }) => {
     return (
         <footer id="contact-us" className="footer">
             <div className="footer-content">
@@ -17,7 +17,10 @@ const Footer = () => {
 
                 {/* Contact Information */}
                 <div className="footer-section footer-contact">
-                    <h3 className="footer-heading">Contact Us</h3>
+                    <h3 className="footer-heading">
+                        <FaEnvelope className="footer-heading-icon" />
+                        Contact Us
+                    </h3>
                     
                     <div className="footer-contact-item">
                         <FaMapMarkerAlt className="footer-icon" />
@@ -44,6 +47,17 @@ const Footer = () => {
                         </button>
                     </a>
                 </div>
+
+                {/* Hours Section */}
+                {hoursData && (
+                    <div className="footer-section footer-hours">
+                        <h3 className="footer-heading">
+                            <FaClock className="footer-heading-icon" />
+                            Hours
+                        </h3>
+                        <div className="footer-hours-content" dangerouslySetInnerHTML={{__html: hoursData}} />
+                    </div>
+                )}
             </div>
 
             {/* Bottom Bar */}
