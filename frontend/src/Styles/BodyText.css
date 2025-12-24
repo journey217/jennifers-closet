@@ -55,6 +55,29 @@
   font-weight: 600;
 }
 
+/* Layout for body text with slideshow */
+.body_text_with_slideshow {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.body_text_with_slideshow .body_text_content {
+  flex: 1;
+  min-width: 0;
+}
+
+.body_text_slideshow {
+  flex: 0 0 45%;
+  max-width: 450px;
+}
+
+.body_text_slideshow .slideshow {
+  width: 100%;
+  margin: 0;
+  box-shadow: none;
+}
+
 #about_info {
   text-align: center;
   padding: 1rem;
@@ -109,5 +132,15 @@
   
   .body_text_content {
     line-height: 1.7;
+  }
+  
+  .body_text_with_slideshow {
+    flex-direction: column-reverse;
+    gap: 1.5rem;
+  }
+  
+  .body_text_slideshow {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }

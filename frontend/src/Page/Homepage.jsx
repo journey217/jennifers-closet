@@ -82,14 +82,7 @@ const Homepage = () => {
         <>
             <Navbar/>
 
-            <div className={"homepage_container"}>
-                {/* Slideshow */}
-                <div className="fade-in">
-                    <Slideshow images={images} interval={5000}/>
-                </div>
-            </div>
-
-            {/* About Section - with background */}
+            {/* About Section - with background and slideshow */}
             <div className="section-wrapper alternate">
                 <div className="section-content">
                     <div ref={aboutRef} style={{opacity: 0}}>
@@ -97,7 +90,9 @@ const Homepage = () => {
                             bodyID={"about-us-title"}
                             bodyHeader={"About Us"}
                             bodyData={aboutData}
-                        />
+                        >
+                            <Slideshow images={images} interval={5000}/>
+                        </BodyText>
                     </div>
                 </div>
             </div>
