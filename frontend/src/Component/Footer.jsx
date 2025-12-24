@@ -44,25 +44,6 @@ const Footer = () => {
                         </button>
                     </a>
                 </div>
-
-                {/* Hours Section */}
-                <div className="footer-section footer-hours">
-                    <h3 className="footer-heading">Hours</h3>
-                    <div className="footer-hours-list">
-                        <div className="footer-hours-item">
-                            <strong>Tuesday</strong>
-                            <span>12:30 PM - 3:00 PM</span>
-                        </div>
-                        <div className="footer-hours-item">
-                            <strong>Thursday</strong>
-                            <span>9:30 AM - 12:00 PM</span>
-                        </div>
-                        <div className="footer-hours-item">
-                            <strong>3rd Saturday</strong>
-                            <span>10:00 AM - 1:00 PM</span>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             {/* Bottom Bar */}
