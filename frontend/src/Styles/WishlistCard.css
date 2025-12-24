@@ -1,0 +1,89 @@
+.wishlist-card {
+    background-color: var(--bg-white);
+    border: 2px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.wishlist-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.wishlist-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px -5px var(--shadow), 0 6px 10px -5px var(--shadow);
+    border-color: var(--primary-light);
+}
+
+.wishlist-card:hover::before {
+    opacity: 1;
+}
+
+.wishlist-card.urgent {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(149, 47, 112, 0.03) 0%, rgba(149, 47, 112, 0.01) 100%);
+}
+
+.dark-mode .wishlist-card.urgent {
+    background: linear-gradient(135deg, rgba(184, 74, 143, 0.08) 0%, rgba(184, 74, 143, 0.02) 100%);
+}
+
+.priority-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wishlist-card-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.wishlist-card-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+@media only screen and (max-width: 768px) {
+    .wishlist-card {
+        padding: 1.25rem;
+    }
+    
+    .wishlist-card-text {
+        font-size: 0.9375rem;
+    }
+    
+    .priority-badge {
+        font-size: 0.6875rem;
+        padding: 0.2rem 0.6rem;
+    }
+}

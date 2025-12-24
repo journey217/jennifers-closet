@@ -1,13 +1,13 @@
 import Navbar from "../Component/Navbar.jsx";
 import Slideshow from "../Component/Slideshow.jsx";
-import Modal from "../Component/Modal.jsx";
 import Footer from "../Component/Footer.jsx";
+import WishlistGrid from "../Component/WishlistGrid.jsx";
 import slide1 from "../assets/Website Slideshow.png"
 import slide2 from "../assets/Website Slideshow (1).png"
 import BodyText from "../Component/BodyText.jsx";
 import {useEffect, useState, useRef} from "react";
 import Calendar from "../Component/Calendar.jsx";
-import { FaHandHoldingHeart } from 'react-icons/fa';
+
 
 const images = [
     slide1,
@@ -20,7 +20,6 @@ const Homepage = () => {
     const [donateData, setDonateData] = useState("")
     const [volunteerData, setVolunteerData] = useState("")
     const [wishlist, setWishlist] = useState([])
-    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const aboutRef = useRef(null);
     const calendarRef = useRef(null);
@@ -77,13 +76,7 @@ const Homepage = () => {
         }
     }
 
-    const openModal = () => {
-        setIsModalOpen(true)
-    }
 
-    const closeModal = () => {
-        setIsModalOpen(false)
-    }
 
     return (
         <>
@@ -127,13 +120,8 @@ const Homepage = () => {
                             bodyHeader={"Donate"}
                             bodyData={donateData}
                         >
-                            {/* Donation List Button with Icon - Now inside the white box */}
-                            <div className={"homepage_button_container"}>
-                                <button onClick={openModal} className={"homepage_button"}>
-                                    <FaHandHoldingHeart style={{display: 'inline', marginRight: '0.5rem'}} />
-                                    View Donation List
-                                </button>
-                            </div>
+                            {/* Wishlist Grid - Directly visible */}
+                            <WishlistGrid wishlist={wishlist} />
                         </BodyText>
                     </div>
                 </div>
@@ -154,23 +142,6 @@ const Homepage = () => {
 
             {/* Footer with Stop Sign, Contact Info, and Address */}
             <Footer />
-
-            {/* Wishlist Modal */}
-            <Modal isOpen={isModalOpen} onClose={closeModal} title="Donation Wishlist">
-                {wishlist.length > 0 ? (
-                    <ul className="wishlist-list">
-                        {wishlist.map((item) => (
-                            <li key={item.id} className="wishlist-list-item">
-                                {item.item}
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <div className="wishlist-empty">
-                        No items on the wishlist at this time.
-                    </div>
-                )}
-            </Modal>
         </>
     )
 }
