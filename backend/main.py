@@ -27,6 +27,7 @@ def get_data():
             aboutData = rows[0][1]
             donateData = rows[0][2]
             volunteerData = rows[0][3]
+            hoursData = rows[0][4]
             
             # Fetch wishlist data
             wishlist_query = '''SELECT id, item FROM wishlist ORDER BY id'''
@@ -41,6 +42,7 @@ def get_data():
                 "aboutData": aboutData, 
                 "donateData": donateData, 
                 "volunteerData": volunteerData,
+                "hoursData": hoursData,
                 "wishlist": wishlist
             }), 200
         except sqlite3.Error as e:
