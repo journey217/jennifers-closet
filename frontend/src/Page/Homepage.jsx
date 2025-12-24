@@ -126,15 +126,15 @@ const Homepage = () => {
                             bodyID={"donations-title"}
                             bodyHeader={"Donate"}
                             bodyData={donateData}
-                        />
-
-                        {/* Donation List Button with Icon */}
-                        <div className={"homepage_button_container"}>
-                            <button onClick={openModal} className={"homepage_button"}>
-                                <FaHandHoldingHeart style={{display: 'inline', marginRight: '0.5rem'}} />
-                                View Donation List
-                            </button>
-                        </div>
+                        >
+                            {/* Donation List Button with Icon - Now inside the white box */}
+                            <div className={"homepage_button_container"}>
+                                <button onClick={openModal} className={"homepage_button"}>
+                                    <FaHandHoldingHeart style={{display: 'inline', marginRight: '0.5rem'}} />
+                                    View Donation List
+                                </button>
+                            </div>
+                        </BodyText>
                     </div>
                 </div>
             </div>
