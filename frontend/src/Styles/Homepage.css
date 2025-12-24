@@ -105,17 +105,17 @@
     padding: 0.5rem 0;
     font-size: 1rem;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-dark);
 }
 
 .wishlist-list-item:not(:last-child) {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--border);
 }
 
 .wishlist-empty {
     text-align: center;
     padding: 2rem;
-    color: #666;
+    color: var(--text-light);
     font-style: italic;
 }
 
