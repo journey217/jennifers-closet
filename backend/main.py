@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 app = Flask(__name__, static_url_path='', static_folder="react-build", template_folder='react-build')
 CORS(app, resources={r"/*": {"origins": "*"}})
-dbfile = 'database.db'
+dbfile = 'database/database.db'
 
 
 @app.route('/', defaults={'path': ''})
@@ -20,16 +20,32 @@ def get_data():
     con = sqlite3.connect(dbfile)
     with con as cursor:
         try:
+            # Fetch active data
             query = '''SELECT * FROM active'''
             result = cursor.execute(query)
             rows = result.fetchall()
             aboutData = rows[0][1]
             donateData = rows[0][2]
             volunteerData = rows[0][3]
-            return jsonify({"success": True, "aboutData": aboutData, "donateData": donateData, "volunteerData": volunteerData}), 200
+            
+            # Fetch wishlist data
+            wishlist_query = '''SELECT id, item FROM wishlist ORDER BY id'''
+            wishlist_result = cursor.execute(wishlist_query)
+            wishlist_rows = wishlist_result.fetchall()
+            
+            # Format wishlist data as a list of dictionaries
+            wishlist = [{"id": row[0], "item": row[1]} for row in wishlist_rows]
+            
+            return jsonify({
+                "success": True, 
+                "aboutData": aboutData, 
+                "donateData": donateData, 
+                "volunteerData": volunteerData,
+                "wishlist": wishlist
+            }), 200
         except sqlite3.Error as e:
             print(e)
-            return jsonify({"success": False, "message": e}), 500
+            return jsonify({"success": False, "message": str(e)}), 500
 
 
 if __name__ == '__main__':
