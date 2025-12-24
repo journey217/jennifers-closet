@@ -19,6 +19,7 @@ const Homepage = () => {
     const [aboutData, setAboutData]= useState("")
     const [donateData, setDonateData] = useState("")
     const [volunteerData, setVolunteerData] = useState("")
+    const [hoursData, setHoursData] = useState("")
     const [wishlist, setWishlist] = useState([])
 
     const aboutRef = useRef(null);
@@ -67,6 +68,7 @@ const Homepage = () => {
                 setAboutData(data.aboutData);
                 setDonateData(data.donateData)
                 setVolunteerData(data.volunteerData)
+                setHoursData(data.hoursData)
                 setWishlist(data.wishlist || [])
             } else {
                 console.error("Error fetching data:", data.message);
@@ -90,6 +92,7 @@ const Homepage = () => {
                             bodyID={"about-us-title"}
                             bodyHeader={"About Us"}
                             bodyData={aboutData}
+                            hoursData={hoursData}
                         >
                             <Slideshow images={images} interval={5000}/>
                         </BodyText>

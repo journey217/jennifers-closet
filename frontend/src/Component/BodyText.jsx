@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-const BodyText = ( { bodyID, bodyHeader, bodyData, children } ) => {
+const BodyText = ( { bodyID, bodyHeader, bodyData, children, hoursData } ) => {
     // Check if children contains a Slideshow component
     const hasSlideshow = children && children.type && children.type.name === 'Slideshow';
 
@@ -16,12 +16,24 @@ const BodyText = ( { bodyID, bodyHeader, bodyData, children } ) => {
                                 {children}
                             </div>
                         </div>
+                        {/* Hours Section */}
+                        {hoursData && (
+                            <div className="hours-container">
+                                <div className="hours-content" dangerouslySetInnerHTML={{__html: hoursData}} />
+                            </div>
+                        )}
                     </>
                 ) : (
                     <>
                         <h2 className={"body_text_header"}>{bodyHeader}</h2>
                         <div className={"body_text_content"} dangerouslySetInnerHTML={{__html: bodyData}} />
                         {children}
+                        {/* Hours Section */}
+                        {hoursData && (
+                            <div className="hours-container">
+                                <div className="hours-content" dangerouslySetInnerHTML={{__html: hoursData}} />
+                            </div>
+                        )}
                     </>
                 )}
             </div>
