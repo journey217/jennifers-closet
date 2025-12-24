@@ -1,65 +1,80 @@
 .App {
-    background: #f6e6f0;
-    background-image: url("./assets/site_background_pink.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height: 100vh;
-    min-height: fit-content;
-    width: 100%;
-    padding-bottom: 20px;
+  background: linear-gradient(135deg, #F8F5F9 0%, #FAF5F8 50%, #F5F3F7 100%);
+  min-height: 100vh;
+  width: 100%;
 }
 
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
+/* Legacy font classes for backward compatibility */
 .delius-regular {
-  font-family: "Delius", cursive;
+  font-family: var(--font-body);
   font-weight: 400;
   font-style: normal;
 }
 
 .cookie-regular {
-  font-family: "Cookie", cursive;
+  font-family: var(--font-script);
   font-weight: 400;
   font-style: normal;
 }
 
 .sidenav_container {
-    display: none;
-}
-
-#disclaimer {
-    margin-inline: auto;
-    text-align: center;
-    width: 100%;
-    color: #ca0303;
+  display: none;
 }
 
 #hours {
-    color: #0127bc;
+  color: #0127bc;
 }
 
-a:hover, a:active, a:visited, a:link {
-    color: #952f70;
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Fade-in animation for scroll reveals */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.fade-in-delay-1 {
+  animation: fadeInUp 0.6s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.fade-in-delay-2 {
+  animation: fadeInUp 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.fade-in-delay-3 {
+  animation: fadeInUp 0.6s ease-out 0.3s forwards;
+  opacity: 0;
 }
 
 @media only screen and (max-width: 1024px) {
-
-    /*.navbar_container {*/
-    /*    display: none;*/
-    /*}*/
-
-    .sidenav_container {
-        display: flex;
-        justify-content: center;
-    }
-
+  .sidenav_container {
+    display: flex;
+    justify-content: center;
+  }
 }
-
