@@ -3,3 +3,4 @@
 database/database.db
 backend/venv
 frontend/package-lock.json
+database/package-lock.json
