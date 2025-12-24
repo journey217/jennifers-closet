@@ -18,13 +18,14 @@ CREATE TABLE active (
 
 
 -- Table: backups
-CREATE TABLE IF NOT EXISTS backups (
+CREATE TABLE backups (
     id        INTEGER PRIMARY KEY AUTOINCREMENT
                       UNIQUE,
     date      TEXT    DEFAULT (CURRENT_TIMESTAMP),
     about     TEXT,
     donate    TEXT,
-    volunteer TEXT
+    volunteer TEXT,
+    hours     TEXT
 );
 
 
