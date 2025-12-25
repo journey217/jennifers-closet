@@ -16,6 +16,10 @@ CREATE TABLE active (
     hours     TEXT
 );
 
+-- Insert default row for active table
+INSERT INTO active (id, about, donate, volunteer, hours) 
+VALUES (1, '', '', '', '');
+
 
 -- Table: backups
 CREATE TABLE backups (
