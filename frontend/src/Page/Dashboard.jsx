@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FaSave, FaPlus, FaTrash, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { FaSave, FaPlus, FaTrash, FaArrowUp, FaArrowDown, FaEye, FaEyeSlash } from 'react-icons/fa';
 import Navbar from '../Component/Navbar.jsx';
 import Footer from '../Component/Footer.jsx';
 import '../Styles/Dashboard.css';
@@ -10,6 +10,13 @@ const Dashboard = () => {
         donate: '',
         volunteer: '',
         hours: ''
+    });
+    
+    const [previews, setPreviews] = useState({
+        about: false,
+        donate: false,
+        volunteer: false,
+        hours: false
     });
     
     const [wishlist, setWishlist] = useState([]);
@@ -55,6 +62,13 @@ const Dashboard = () => {
         setActiveData(prev => ({
             ...prev,
             [field]: value
+        }));
+    };
+
+    const togglePreview = (field) => {
+        setPreviews(prev => ({
+            ...prev,
+            [field]: !prev[field]
         }));
     };
 
@@ -205,47 +219,111 @@ const Dashboard = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="about">About</label>
-                        <textarea
-                            id="about"
-                            value={activeData.about}
-                            onChange={(e) => handleActiveChange('about', e.target.value)}
-                            rows="6"
-                            placeholder="Enter information about the closet..."
-                        />
+                        <div className="field-header">
+                            <label htmlFor="about">About</label>
+                            <button 
+                                className="preview-btn"
+                                onClick={() => togglePreview('about')}
+                                type="button"
+                            >
+                                {previews.about ? <><FaEyeSlash /> Hide Preview</> : <><FaEye /> Show Preview</>}
+                            </button>
+                        </div>
+                        {!previews.about ? (
+                            <textarea
+                                id="about"
+                                value={activeData.about}
+                                onChange={(e) => handleActiveChange('about', e.target.value)}
+                                rows="6"
+                                placeholder="Enter information about the closet..."
+                            />
+                        ) : (
+                            <div 
+                                className="html-preview"
+                                dangerouslySetInnerHTML={{ __html: activeData.about }}
+                            />
+                        )}
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="donate">Donate</label>
-                        <textarea
-                            id="donate"
-                            value={activeData.donate}
-                            onChange={(e) => handleActiveChange('donate', e.target.value)}
-                            rows="6"
-                            placeholder="Enter donation information..."
-                        />
+                        <div className="field-header">
+                            <label htmlFor="donate">Donate</label>
+                            <button 
+                                className="preview-btn"
+                                onClick={() => togglePreview('donate')}
+                                type="button"
+                            >
+                                {previews.donate ? <><FaEyeSlash /> Hide Preview</> : <><FaEye /> Show Preview</>}
+                            </button>
+                        </div>
+                        {!previews.donate ? (
+                            <textarea
+                                id="donate"
+                                value={activeData.donate}
+                                onChange={(e) => handleActiveChange('donate', e.target.value)}
+                                rows="6"
+                                placeholder="Enter donation information..."
+                            />
+                        ) : (
+                            <div 
+                                className="html-preview"
+                                dangerouslySetInnerHTML={{ __html: activeData.donate }}
+                            />
+                        )}
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="volunteer">Volunteer</label>
-                        <textarea
-                            id="volunteer"
-                            value={activeData.volunteer}
-                            onChange={(e) => handleActiveChange('volunteer', e.target.value)}
-                            rows="6"
-                            placeholder="Enter volunteer information..."
-                        />
+                        <div className="field-header">
+                            <label htmlFor="volunteer">Volunteer</label>
+                            <button 
+                                className="preview-btn"
+                                onClick={() => togglePreview('volunteer')}
+                                type="button"
+                            >
+                                {previews.volunteer ? <><FaEyeSlash /> Hide Preview</> : <><FaEye /> Show Preview</>}
+                            </button>
+                        </div>
+                        {!previews.volunteer ? (
+                            <textarea
+                                id="volunteer"
+                                value={activeData.volunteer}
+                                onChange={(e) => handleActiveChange('volunteer', e.target.value)}
+                                rows="6"
+                                placeholder="Enter volunteer information..."
+                            />
+                        ) : (
+                            <div 
+                                className="html-preview"
+                                dangerouslySetInnerHTML={{ __html: activeData.volunteer }}
+                            />
+                        )}
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="hours">Hours</label>
-                        <textarea
-                            id="hours"
-                            value={activeData.hours}
-                            onChange={(e) => handleActiveChange('hours', e.target.value)}
-                            rows="4"
-                            placeholder="Enter hours information..."
-                        />
+                        <div className="field-header">
+                            <label htmlFor="hours">Hours</label>
+                            <button 
+                                className="preview-btn"
+                                onClick={() => togglePreview('hours')}
+                                type="button"
+                            >
+                                {previews.hours ? <><FaEyeSlash /> Hide Preview</> : <><FaEye /> Show Preview</>}
+                            </button>
+                        </div>
+                        {!previews.hours ? (
+                            <textarea
+                                id="hours"
+                                value={activeData.hours}
+                                onChange={(e) => handleActiveChange('hours', e.target.value)}
+                                rows="4"
+                                placeholder="Enter hours information..."
+                            />
+                        ) : (
+                            <div 
+                                className="html-preview"
+                                dangerouslySetInnerHTML={{ __html: activeData.hours }}
+                            />
+                        )}
                     </div>
                 </section>
 
