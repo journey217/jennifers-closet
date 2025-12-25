@@ -90,7 +90,7 @@ const Homepage = () => {
                     <div ref={aboutRef} style={{opacity: 0}}>
                         <BodyText
                             bodyID={"about-us-title"}
-                            bodyHeader={"About Us"}
+                            bodyHeader={"Our Mission"}
                             bodyData={aboutData}
                             hoursData={hoursData}
                         >
