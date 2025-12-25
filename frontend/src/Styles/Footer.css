@@ -173,6 +173,33 @@
   font-size: 0.95rem !important;
 }
 
+/* Dark Mode Fixes */
+.dark-mode .footer-heading-icon,
+.dark-mode .footer-icon {
+  color: white !important;
+}
+
+.dark-mode .footer-contact-text strong,
+.dark-mode .footer-hours-content strong {
+  color: white !important;
+}
+
+.dark-mode .footer-tagline {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark-mode .footer-email-link {
+  color: white !important;
+}
+
+.dark-mode .footer-email-link:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark-mode .footer-hours-content {
+  border-left: 4px solid #ffffff !important;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .footer-content {
