@@ -75,6 +75,24 @@ CREATE TABLE user_attribute (
 );
 
 
+-- Table: section_toggle
+CREATE TABLE section_toggle (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT
+                      UNIQUE
+                      NOT NULL,
+    about     INTEGER DEFAULT (1)
+                      NOT NULL,
+    events    INTEGER NOT NULL
+                      DEFAULT (1),
+    donate    INTEGER DEFAULT (1)
+                      NOT NULL,
+    volunteer INTEGER DEFAULT (1)
+                      NOT NULL
+);
+
+-- Insert default row for active table
+INSERT INTO section_toggle (id) VALUES (1);
+
 
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;
