@@ -60,7 +60,9 @@ function insertUserData(db) {
           const labels = [
             { id: parseInt(process.env.USER_ATTRIBUTE_ID_12399), name: process.env.USER_ATTRIBUTE_NAME_12556 },
             { id: parseInt(process.env.USER_ATTRIBUTE_ID_12556), name: process.env.USER_ATTRIBUTE_NAME_12754 },
-            { id: parseInt(process.env.USER_ATTRIBUTE_ID_12488), name: process.env.USER_ATTRIBUTE_NAME_12623 }
+            { id: parseInt(process.env.USER_ATTRIBUTE_ID_12488), name: process.env.USER_ATTRIBUTE_NAME_12623 },
+            { id: parseInt(process.env.USER_ATTRIBUTE_ID_12677), name: process.env.USER_ATTRIBUTE_NAME_12889 },
+            { id: parseInt(process.env.USER_ATTRIBUTE_ID_12923), name: process.env.USER_ATTRIBUTE_NAME_13045 }
           ];
 
           let pendingLabels = labels.length;
