@@ -9,5 +9,5 @@ services:
     build: .
     ports:
       - '8080:8000'
-  mongo:
-    image: mongo:4.2.5
+    volumes:
+      - ../database:/root/database
