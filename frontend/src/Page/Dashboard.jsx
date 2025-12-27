@@ -5,6 +5,19 @@ import Footer from '../Component/Footer.jsx';
 import '../Styles/Dashboard.css';
 
 const Dashboard = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+    const [userId, setUserId] = useState(null);
+    const [authToken, setAuthToken] = useState(null);
+    const [pageToken, setPageToken] = useState(null);
+    
+    const [loginForm, setLoginForm] = useState({
+        username: '',
+        password: ''
+    });
+    const [loginError, setLoginError] = useState('');
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
+    
     const [activeData, setActiveData] = useState({
         about: '',
         donate: '',
@@ -26,8 +39,154 @@ const Dashboard = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
 
     useEffect(() => {
-        fetchData();
+        checkAuthentication();
     }, []);
+
+    useEffect(() => {
+        if (isAuthenticated && userId && authToken) {
+            fetchData();
+            generatePageToken();
+        }
+    }, [isAuthenticated, userId, authToken]);
+
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    };
+
+    const setCookie = (name, value, days) => {
+        let expires = '';
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = `; expires=${date.toUTCString()}`;
+        }
+        document.cookie = `${name}=${value}${expires}; path=/`;
+    };
+
+    const deleteCookie = (name) => {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    };
+
+    const checkAuthentication = async () => {
+        const id = getCookie('id');
+        const token = getCookie('token');
+
+        if (!id || !token) {
+            setIsCheckingAuth(false);
+            setIsAuthenticated(false);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_PATH}/api/verify-auth-token`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: id,
+                    auth_token: token
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success && data.valid) {
+                setUserId(parseInt(id));
+                setAuthToken(token);
+                setIsAuthenticated(true);
+            } else {
+                deleteCookie('id');
+                deleteCookie('token');
+                setIsAuthenticated(false);
+            }
+        } catch (error) {
+            console.error('Error verifying authentication:', error);
+            deleteCookie('id');
+            deleteCookie('token');
+            setIsAuthenticated(false);
+        } finally {
+            setIsCheckingAuth(false);
+        }
+    };
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoginError('');
+        setIsLoggingIn(true);
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_PATH}/api/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: loginForm.username,
+                    password: loginForm.password
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setCookie('id', data.user_id, 30);
+                setCookie('token', data.auth_token, 30);
+                setUserId(data.user_id);
+                setAuthToken(data.auth_token);
+                setIsAuthenticated(true);
+                setLoginForm({ username: '', password: '' });
+            } else {
+                setLoginError(data.message || 'Login failed');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            setLoginError('Login failed. Please try again.');
+        } finally {
+            setIsLoggingIn(false);
+        }
+    };
+
+    const handleLogout = () => {
+        deleteCookie('id');
+        deleteCookie('token');
+        setUserId(null);
+        setAuthToken(null);
+        setPageToken(null);
+        setIsAuthenticated(false);
+        setActiveData({ about: '', donate: '', volunteer: '', hours: '' });
+        setWishlist([]);
+    };
+
+    const generatePageToken = async () => {
+        if (!userId || !authToken) return;
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_PATH}/api/generate-page-token`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_id: userId })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setPageToken(data.page_token);
+            } else {
+                console.error('Failed to generate page token');
+                showMessage('Failed to generate page token', 'error');
+            }
+        } catch (error) {
+            console.error('Error generating page token:', error);
+            showMessage('Error generating page token', 'error');
+        }
+    };
 
     const fetchData = async () => {
         try {
@@ -78,16 +237,26 @@ const Dashboard = () => {
             const response = await fetch(`${import.meta.env.VITE_API_PATH}/api/active`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': `Bearer ${authToken}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(activeData)
+                body: JSON.stringify({
+                    user_id: userId,
+                    page_token: pageToken,
+                    ...activeData
+                })
             });
 
             const data = await response.json();
             if (data.success) {
                 showMessage('Active data saved successfully!', 'success');
             } else {
-                showMessage('Error saving active data', 'error');
+                if (data.message && data.message.includes('page token')) {
+                    await generatePageToken();
+                    showMessage('Session refreshed. Please try saving again.', 'warning');
+                } else {
+                    showMessage('Error saving active data', 'error');
+                }
             }
         } catch (error) {
             console.error('Error saving active data:', error);
@@ -181,6 +350,69 @@ const Dashboard = () => {
         }
     };
 
+    if (isCheckingAuth) {
+        return (
+            <div className="dashboard-container">
+                <Navbar />
+                <div className="dashboard-content">
+                    <p>Checking authentication...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!isAuthenticated) {
+        return (
+            <div className="dashboard-container">
+                <Navbar />
+                <div className="dashboard-content">
+                    <div className="login-container">
+                        <h1 className="dashboard-title">Dashboard Login</h1>
+                        <form className="login-form" onSubmit={handleLogin}>
+                            {loginError && (
+                                <div className="message error">
+                                    {loginError}
+                                </div>
+                            )}
+                            <div className="form-group">
+                                <label htmlFor="username">Username</label>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    value={loginForm.username}
+                                    onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
+                                    required
+                                    disabled={isLoggingIn}
+                                    autoComplete="username"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">Password</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    value={loginForm.password}
+                                    onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                                    required
+                                    disabled={isLoggingIn}
+                                    autoComplete="current-password"
+                                />
+                            </div>
+                            <button 
+                                type="submit" 
+                                className="login-btn"
+                                disabled={isLoggingIn}
+                            >
+                                {isLoggingIn ? 'Logging in...' : 'Login'}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <Footer hoursData="" />
+            </div>
+        );
+    }
+
     if (loading) {
         return (
             <div className="dashboard-container">
@@ -197,7 +429,12 @@ const Dashboard = () => {
             <Navbar />
             
             <div className="dashboard-content">
-                <h1 className="dashboard-title">Dashboard</h1>
+                <div className="dashboard-header">
+                    <h1 className="dashboard-title">Dashboard</h1>
+                    <button className="logout-btn" onClick={handleLogout}>
+                        Logout
+                    </button>
+                </div>
 
                 {message.text && (
                     <div className={`message ${message.type}`}>
