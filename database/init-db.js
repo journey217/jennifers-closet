@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 // Configuration
 const DB_PATH = path.join(__dirname, 'database.db');
 const SQL_FILE = path.join(__dirname, 'database.sql');
+const DATA_SQL_FILE = path.join(__dirname, 'data.sql');
 
 // Check for force flag
 const forceReset = process.argv.includes('--force');
@@ -118,6 +119,54 @@ function insertUserData(db) {
 }
 
 /**
+ * Show final table status and close the database
+ * @param {sqlite3.Database} db - The database connection
+ * @param {Array} tables - Array of table objects
+ * @returns {Promise<void>}
+ */
+function showFinalStatus(db, tables) {
+  return new Promise((resolve) => {
+    // Get table counts
+    console.log('\n📈 Final table status:');
+    let pending = 0;
+    const validTables = tables.filter(t => t.name !== 'sqlite_sequence');
+
+    validTables.forEach(table => {
+      pending++;
+      db.get(`SELECT COUNT(*) as count FROM ${table.name}`, [], (err, row) => {
+        if (!err) {
+          console.log(`   - ${table.name}: ${row.count} records`);
+        }
+        pending--;
+        if (pending === 0) {
+          // Close the database after all queries complete
+          db.close((err) => {
+            if (err) {
+              console.error('❌ Error closing database:', err.message);
+            } else {
+              console.log('\n✨ Database is ready to use!\n');
+            }
+            resolve();
+          });
+        }
+      });
+    });
+
+    // Handle case where there are no valid tables
+    if (validTables.length === 0) {
+      db.close((err) => {
+        if (err) {
+          console.error('❌ Error closing database:', err.message);
+        } else {
+          console.log('\n✨ Database is ready to use!\n');
+        }
+        resolve();
+      });
+    }
+  });
+}
+
+/**
  * Initialize the database by reading and executing the SQL file
  */
 async function initializeDatabase() {
@@ -186,50 +235,54 @@ async function initializeDatabase() {
           }
         });
 
-        // Insert user data from environment variables
-        try {
-          await insertUserData(db);
-        } catch (error) {
-          console.error('❌ Error inserting user data:', error.message);
-          db.close();
-          process.exit(1);
+        // Execute data.sql if it exists
+        if (fs.existsSync(DATA_SQL_FILE)) {
+          console.log('\n📝 Loading initial data from data.sql...');
+          try {
+            const dataSqlContent = fs.readFileSync(DATA_SQL_FILE, 'utf8');
+            db.exec(dataSqlContent, async (err) => {
+              if (err) {
+                console.error('❌ Error executing data.sql:', err.message);
+                db.close();
+                process.exit(1);
+              }
+
+              console.log('✅ Initial data loaded successfully!');
+
+              // Insert user data from environment variables
+              try {
+                await insertUserData(db);
+              } catch (error) {
+                console.error('❌ Error inserting user data:', error.message);
+                db.close();
+                process.exit(1);
+              }
+
+              // Continue to final table status...
+              await showFinalStatus(db, tables);
+            });
+          } catch (error) {
+            console.error('❌ Error reading data.sql:', error.message);
+            db.close();
+            process.exit(1);
+          }
+        } else {
+          console.log('\n⚠️  data.sql file not found, skipping initial data load');
+          
+          // Insert user data from environment variables
+          try {
+            await insertUserData(db);
+          } catch (error) {
+            console.error('❌ Error inserting user data:', error.message);
+            db.close();
+            process.exit(1);
+          }
+
+          // Continue to final table status...
+          await showFinalStatus(db, tables);
         }
 
-        // Get table counts
-        console.log('\n📈 Final table status:');
-        let pending = 0;
-        const validTables = tables.filter(t => t.name !== 'sqlite_sequence');
 
-        validTables.forEach(table => {
-          pending++;
-          db.get(`SELECT COUNT(*) as count FROM ${table.name}`, [], (err, row) => {
-            if (!err) {
-              console.log(`   - ${table.name}: ${row.count} records`);
-            }
-            pending--;
-            if (pending === 0) {
-              // Close the database after all queries complete
-              db.close((err) => {
-                if (err) {
-                  console.error('❌ Error closing database:', err.message);
-                } else {
-                  console.log('\n✨ Database is ready to use!\n');
-                }
-              });
-            }
-          });
-        });
-
-        // Handle case where there are no valid tables
-        if (validTables.length === 0) {
-          db.close((err) => {
-            if (err) {
-              console.error('❌ Error closing database:', err.message);
-            } else {
-              console.log('\n✨ Database is ready to use!\n');
-            }
-          });
-        }
       });
     });
 
