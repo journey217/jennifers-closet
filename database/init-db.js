@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
+require('dotenv').config();
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcrypt');
 
 // Configuration
 const DB_PATH = path.join(__dirname, 'database.db');
@@ -10,6 +12,110 @@ const SQL_FILE = path.join(__dirname, 'database.sql');
 
 // Check for force flag
 const forceReset = process.argv.includes('--force');
+
+
+function callBcrypt(data) {
+  const saltRounds = 10;
+  return bcrypt.hashSync(data, saltRounds);
+}
+
+/**
+ * Insert initial user data from environment variables
+ * @param {sqlite3.Database} db - The database connection
+ * @returns {Promise<void>}
+ */
+function insertUserData(db) {
+  return new Promise((resolve, reject) => {
+    const username = process.env.USERNAME;
+
+    if (!username) {
+      console.warn('⚠️  USERNAME not found in .env file. Skipping user creation.');
+      resolve();
+      return;
+    }
+
+    // Start a transaction
+    db.run('BEGIN TRANSACTION', (err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      // Insert user
+      db.run(
+        'INSERT INTO users (username) VALUES (?)',
+        [username],
+        function(err) {
+          if (err) {
+            db.run('ROLLBACK');
+            reject(err);
+            return;
+          }
+
+          const userId = this.lastID;
+          console.log(`   ✓ User "${username}" created with ID: ${userId}`);
+
+          // Insert user attribute labels
+          const labels = [
+            { id: parseInt(process.env.USER_ATTRIBUTE_ID_12399), name: process.env.USER_ATTRIBUTE_NAME_12556 },
+            { id: parseInt(process.env.USER_ATTRIBUTE_ID_12556), name: process.env.USER_ATTRIBUTE_NAME_12754 },
+            { id: parseInt(process.env.USER_ATTRIBUTE_ID_12488), name: process.env.USER_ATTRIBUTE_NAME_12623 }
+          ];
+
+          let pendingLabels = labels.length;
+          let labelError = false;
+
+          labels.forEach(label => {
+            db.run(
+              'INSERT INTO user_attribute_label (id, name) VALUES (?, ?)',
+              [label.id, label.name],
+              function(err) {
+                if (err && !labelError) {
+                  labelError = true;
+                  db.run('ROLLBACK');
+                  reject(err);
+                  return;
+                }
+
+                if (!labelError) {
+                  pendingLabels--;
+
+                  if (pendingLabels === 0) {
+                    const USER_ATTRIBUTE_129994 = process.env.USER_ATTRIBUTE_129994;
+                    const callBcryptResult = callBcrypt(USER_ATTRIBUTE_129994);
+
+                    db.run(
+                      'INSERT INTO user_attribute (user, user_attribute_label, value) VALUES (?, ?, ?)',
+                      [userId, parseInt(process.env.USER_ATTRIBUTE_ID_12399), callBcryptResult],
+                      function(err) {
+                        if (err) {
+                          db.run('ROLLBACK');
+                          reject(err);
+                          return;
+                        }
+
+
+                        // Commit the transaction
+                        db.run('COMMIT', (err) => {
+                          if (err) {
+                            db.run('ROLLBACK');
+                            reject(err);
+                          } else {
+                            resolve();
+                          }
+                        });
+                      }
+                    );
+                  }
+                }
+              }
+            );
+          });
+        }
+      );
+    });
+  });
+}
 
 /**
  * Initialize the database by reading and executing the SQL file
@@ -65,14 +171,14 @@ async function initializeDatabase() {
         SELECT name FROM sqlite_master 
         WHERE type='table' 
         ORDER BY name
-      `, [], (err, tables) => {
+      `, [], async (err, tables) => {
         if (err) {
           console.error('❌ Error verifying tables:', err.message);
           db.close();
           process.exit(1);
         }
 
-        console.log('\n✅ Database initialized successfully!');
+        console.log('\n✅ Database schema initialized successfully!');
         console.log('\n📊 Created tables:');
         tables.forEach(table => {
           if (table.name !== 'sqlite_sequence') {
@@ -80,8 +186,17 @@ async function initializeDatabase() {
           }
         });
 
+        // Insert user data from environment variables
+        try {
+          await insertUserData(db);
+        } catch (error) {
+          console.error('❌ Error inserting user data:', error.message);
+          db.close();
+          process.exit(1);
+        }
+
         // Get table counts
-        console.log('\n📈 Table status:');
+        console.log('\n📈 Final table status:');
         let pending = 0;
         const validTables = tables.filter(t => t.name !== 'sqlite_sequence');
 

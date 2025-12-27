@@ -39,8 +39,7 @@ CREATE TABLE IF NOT EXISTS users (
                             UNIQUE
                             NOT NULL,
     username        TEXT    UNIQUE
-                            NOT NULL,
-    hashed_password TEXT    NOT NULL
+                            NOT NULL
 );
 
 
@@ -51,6 +50,30 @@ CREATE TABLE IF NOT EXISTS wishlist (
                  UNIQUE,
     item TEXT    NOT NULL
 );
+
+
+-- Table: user_attribute_label
+CREATE TABLE user_attribute_label (
+    id   INTEGER PRIMARY KEY AUTOINCREMENT
+                 UNIQUE
+                 NOT NULL,
+    name TEXT    UNIQUE
+                 NOT NULL
+);
+
+
+-- Table: user_attribute
+CREATE TABLE user_attribute (
+    id                   INTEGER PRIMARY KEY AUTOINCREMENT
+                                 UNIQUE
+                                 NOT NULL,
+    user                 INTEGER REFERENCES users (id) ON DELETE CASCADE
+                                 NOT NULL,
+    user_attribute_label INTEGER NOT NULL
+                                 REFERENCES user_attribute_label (id) ON DELETE CASCADE,
+    value                TEXT    NOT NULL
+);
+
 
 
 COMMIT TRANSACTION;
