@@ -93,6 +93,7 @@ const Homepage = () => {
                             bodyHeader={"Our Mission"}
                             bodyData={aboutData}
                             hoursData={hoursData}
+                            hasSlideshow={true}
                         >
                             <Slideshow images={images} interval={5000}/>
                         </BodyText>

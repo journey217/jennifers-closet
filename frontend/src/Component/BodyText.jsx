@@ -1,9 +1,4 @@
-import {useState} from "react";
-
-const BodyText = ( { bodyID, bodyHeader, bodyData, children, hoursData } ) => {
-    // Check if children contains a Slideshow component
-    const hasSlideshow = children && children.type && children.type.name === 'Slideshow';
-
+const BodyText = ( { bodyID, bodyHeader, bodyData, children, hoursData, hasSlideshow = false } ) => {
     return (
         <div id={bodyID}>
             <div className={"body_text_container"}>
