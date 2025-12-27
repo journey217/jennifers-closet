@@ -72,8 +72,9 @@
   max-width: 450px;
 }
 
-.body_text_slideshow .slideshow {
+.body_text_slideshow .slideshow_container {
   width: 100%;
+  max-width: 100%;
   margin: 0;
   box-shadow: none;
 }
