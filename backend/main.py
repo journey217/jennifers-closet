@@ -407,6 +407,31 @@ def reorder_wishlist():
         con.close()
 
 
+@app.route('/api/section-toggle', methods=['PUT'])
+@require_auth
+def update_section_toggle(user_id):
+    """Update the section toggle settings"""
+    con = sqlite3.connect(dbfile)
+    cursor = con.cursor()
+    data = request.json
+    
+    try:
+        query = '''UPDATE section_toggle SET about = ?, events = ?, donate = ?, volunteer = ? WHERE id = 1'''
+        cursor.execute(query, (
+            data.get('about', 1),
+            data.get('events', 1),
+            data.get('donate', 1),
+            data.get('volunteer', 1)
+        ))
+        con.commit()
+        return jsonify({"success": True, "message": "Section toggle settings updated successfully"}), 200
+    except sqlite3.Error as e:
+        print(e)
+        return jsonify({"success": False, "message": str(e)}), 500
+    finally:
+        con.close()
+
+
 @app.route('/api/generate-page-token', methods=['POST'])
 @require_auth
 def generate_page_token(user_id):

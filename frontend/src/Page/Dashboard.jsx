@@ -37,6 +37,14 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState({ text: '', type: '' });
+    
+    const [sectionToggle, setSectionToggle] = useState({
+        about: 1,
+        events: 1,
+        donate: 1,
+        volunteer: 1
+    });
+    const [savingToggle, setSavingToggle] = useState(false);
 
     useEffect(() => {
         checkAuthentication();
@@ -201,6 +209,12 @@ const Dashboard = () => {
                     hours: data.hoursData || ''
                 });
                 setWishlist(data.wishlist || []);
+                setSectionToggle(data.sectionToggle || {
+                    about: 1,
+                    events: 1,
+                    donate: 1,
+                    volunteer: 1
+                });
             } else {
                 showMessage('Error fetching data', 'error');
             }
@@ -229,6 +243,48 @@ const Dashboard = () => {
             ...prev,
             [field]: !prev[field]
         }));
+    };
+
+    const handleSectionToggleChange = (field) => {
+        setSectionToggle(prev => ({
+            ...prev,
+            [field]: prev[field] === 1 ? 0 : 1
+        }));
+    };
+
+    const saveSectionToggle = async () => {
+        setSavingToggle(true);
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_PATH}/api/section-toggle`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    page_token: pageToken,
+                    ...sectionToggle
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                showMessage('Section visibility settings saved successfully!', 'success');
+            } else {
+                if (data.message && data.message.includes('page token')) {
+                    await generatePageToken();
+                    showMessage('Session refreshed. Please try saving again.', 'warning');
+                } else {
+                    showMessage('Error saving section toggle settings', 'error');
+                }
+            }
+        } catch (error) {
+            console.error('Error saving section toggle:', error);
+            showMessage('Error saving section toggle settings', 'error');
+        } finally {
+            setSavingToggle(false);
+        }
     };
 
     const saveActiveData = async () => {
@@ -441,6 +497,88 @@ const Dashboard = () => {
                         {message.text}
                     </div>
                 )}
+
+                {/* Section Visibility Section */}
+                <section className="dashboard-section">
+                    <div className="section-header">
+                        <h2>Section Visibility</h2>
+                        <button 
+                            className="save-btn"
+                            onClick={saveSectionToggle}
+                            disabled={savingToggle}
+                        >
+                            <FaSave /> {savingToggle ? 'Saving...' : 'Save Changes'}
+                        </button>
+                    </div>
+
+                    <div className="toggle-section">
+                        <p className="section-description">
+                            Control which sections are visible on the main website. Disabled sections will be hidden from both the page and navigation menu.
+                        </p>
+                        
+                        <div className="toggle-grid">
+                            <div className="toggle-item">
+                                <label className="toggle-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={sectionToggle.about === 1}
+                                        onChange={() => handleSectionToggleChange('about')}
+                                        className="toggle-checkbox"
+                                    />
+                                    <span className="toggle-text">About Section</span>
+                                </label>
+                                <span className={`toggle-status ${sectionToggle.about === 1 ? 'enabled' : 'disabled'}`}>
+                                    {sectionToggle.about === 1 ? 'Visible' : 'Hidden'}
+                                </span>
+                            </div>
+
+                            <div className="toggle-item">
+                                <label className="toggle-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={sectionToggle.events === 1}
+                                        onChange={() => handleSectionToggleChange('events')}
+                                        className="toggle-checkbox"
+                                    />
+                                    <span className="toggle-text">Events/Calendar Section</span>
+                                </label>
+                                <span className={`toggle-status ${sectionToggle.events === 1 ? 'enabled' : 'disabled'}`}>
+                                    {sectionToggle.events === 1 ? 'Visible' : 'Hidden'}
+                                </span>
+                            </div>
+
+                            <div className="toggle-item">
+                                <label className="toggle-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={sectionToggle.donate === 1}
+                                        onChange={() => handleSectionToggleChange('donate')}
+                                        className="toggle-checkbox"
+                                    />
+                                    <span className="toggle-text">Donate Section</span>
+                                </label>
+                                <span className={`toggle-status ${sectionToggle.donate === 1 ? 'enabled' : 'disabled'}`}>
+                                    {sectionToggle.donate === 1 ? 'Visible' : 'Hidden'}
+                                </span>
+                            </div>
+
+                            <div className="toggle-item">
+                                <label className="toggle-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={sectionToggle.volunteer === 1}
+                                        onChange={() => handleSectionToggleChange('volunteer')}
+                                        className="toggle-checkbox"
+                                    />
+                                    <span className="toggle-text">Volunteer Section</span>
+                                </label>
+                                <span className={`toggle-status ${sectionToggle.volunteer === 1 ? 'enabled' : 'disabled'}`}>
+                                    {sectionToggle.volunteer === 1 ? 'Visible' : 'Hidden'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
                 {/* Active Data Section */}
                 <section className="dashboard-section">
