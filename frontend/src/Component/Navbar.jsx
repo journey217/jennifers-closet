@@ -3,7 +3,7 @@ import Sidenav from "./Sidenav.jsx";
 import { useTheme } from "./ThemeContext.jsx";
 import { FiSun, FiMoon } from "react-icons/fi";
 
-const Navbar = () => {
+const Navbar = ({ sectionToggle = { about: 1, events: 1, donate: 1, volunteer: 1 } }) => {
     const navigate = useNavigate()
     const { isDark, toggleTheme } = useTheme();
     
@@ -29,20 +29,28 @@ const Navbar = () => {
                         Jennifer's Closet
                     </h1>
                 </div>
-                <Sidenav/>
+                <Sidenav sectionToggle={sectionToggle} />
                 <div className={"navbar_menu_list"}>
-                    <div onClick={e => scrollToSection('about-us-title')} className={"navbar_menu_list_item"}>
-                        ABOUT
-                    </div>
-                    <div onClick={e => scrollToSection("events-title")} className={"navbar_menu_list_item"}>
-                        EVENTS
-                    </div>
-                    <div onClick={e => scrollToSection("donations-title")} className={"navbar_menu_list_item"}>
-                        DONATE
-                    </div>
-                    <div onClick={e => scrollToSection("volunteering-title")} className={"navbar_menu_list_item"}>
-                        VOLUNTEER
-                    </div>
+                    {sectionToggle.about === 1 && (
+                        <div onClick={e => scrollToSection('about-us-title')} className={"navbar_menu_list_item"}>
+                            ABOUT
+                        </div>
+                    )}
+                    {sectionToggle.events === 1 && (
+                        <div onClick={e => scrollToSection("events-title")} className={"navbar_menu_list_item"}>
+                            EVENTS
+                        </div>
+                    )}
+                    {sectionToggle.donate === 1 && (
+                        <div onClick={e => scrollToSection("donations-title")} className={"navbar_menu_list_item"}>
+                            DONATE
+                        </div>
+                    )}
+                    {sectionToggle.volunteer === 1 && (
+                        <div onClick={e => scrollToSection("volunteering-title")} className={"navbar_menu_list_item"}>
+                            VOLUNTEER
+                        </div>
+                    )}
                     <div onClick={e => scrollToSection("contact-us")} className={"navbar_menu_list_item"}>
                         CONTACT
                     </div>

@@ -261,13 +261,27 @@ def get_data():
         # Format wishlist data as a list of dictionaries
         wishlist = [{"id": row[0], "item": row[1]} for row in wishlist_rows]
         
+        # Fetch section toggle data
+        toggle_query = '''SELECT about, events, donate, volunteer FROM section_toggle WHERE id = 1'''
+        toggle_result = cursor.execute(toggle_query)
+        toggle_row = toggle_result.fetchone()
+        
+        # Default to all sections enabled if no toggle data exists
+        section_toggle = {
+            "about": toggle_row[0] if toggle_row else 1,
+            "events": toggle_row[1] if toggle_row else 1,
+            "donate": toggle_row[2] if toggle_row else 1,
+            "volunteer": toggle_row[3] if toggle_row else 1
+        }
+        
         return jsonify({
             "success": True, 
             "aboutData": aboutData, 
             "donateData": donateData, 
             "volunteerData": volunteerData,
             "hoursData": hoursData,
-            "wishlist": wishlist
+            "wishlist": wishlist,
+            "sectionToggle": section_toggle
         }), 200
     except sqlite3.Error as e:
         print(e)

@@ -21,6 +21,12 @@ const Homepage = () => {
     const [volunteerData, setVolunteerData] = useState("")
     const [hoursData, setHoursData] = useState("")
     const [wishlist, setWishlist] = useState([])
+    const [sectionToggle, setSectionToggle] = useState({
+        about: 1,
+        events: 1,
+        donate: 1,
+        volunteer: 1
+    })
 
     const aboutRef = useRef(null);
     const calendarRef = useRef(null);
@@ -70,6 +76,12 @@ const Homepage = () => {
                 setVolunteerData(data.volunteerData)
                 setHoursData(data.hoursData)
                 setWishlist(data.wishlist || [])
+                setSectionToggle(data.sectionToggle || {
+                    about: 1,
+                    events: 1,
+                    donate: 1,
+                    volunteer: 1
+                })
             } else {
                 console.error("Error fetching data:", data.message);
             }
@@ -82,62 +94,70 @@ const Homepage = () => {
 
     return (
         <>
-            <Navbar/>
+            <Navbar sectionToggle={sectionToggle} />
 
             {/* About Section - with background and slideshow */}
-            <div className="section-wrapper alternate">
-                <div className="section-content">
-                    <div ref={aboutRef} style={{opacity: 0}}>
-                        <BodyText
-                            bodyID={"about-us-title"}
-                            bodyHeader={"Our Mission"}
-                            bodyData={aboutData}
-                            hoursData={hoursData}
-                            hasSlideshow={true}
-                        >
-                            <Slideshow images={images} interval={5000}/>
-                        </BodyText>
+            {sectionToggle.about === 1 && (
+                <div className="section-wrapper alternate">
+                    <div className="section-content">
+                        <div ref={aboutRef} style={{opacity: 0}}>
+                            <BodyText
+                                bodyID={"about-us-title"}
+                                bodyHeader={"Our Mission"}
+                                bodyData={aboutData}
+                                hoursData={hoursData}
+                                hasSlideshow={true}
+                            >
+                                <Slideshow images={images} interval={5000}/>
+                            </BodyText>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* Calendar Section - no background */}
-            <div className="section-wrapper">
-                <div className="section-content">
-                    <div ref={calendarRef} style={{opacity: 0}}>
-                        <Calendar/>
+            {sectionToggle.events === 1 && (
+                <div className="section-wrapper">
+                    <div className="section-content">
+                        <div ref={calendarRef} style={{opacity: 0}}>
+                            <Calendar/>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* Donate Section - with background */}
-            <div className="section-wrapper alternate">
-                <div className="section-content">
-                    <div ref={donateRef} style={{opacity: 0}}>
-                        <BodyText
-                            bodyID={"donations-title"}
-                            bodyHeader={"Donate"}
-                            bodyData={donateData}
-                        >
-                            {/* Wishlist Grid - Directly visible */}
-                            <WishlistGrid wishlist={wishlist} />
-                        </BodyText>
+            {sectionToggle.donate === 1 && (
+                <div className="section-wrapper alternate">
+                    <div className="section-content">
+                        <div ref={donateRef} style={{opacity: 0}}>
+                            <BodyText
+                                bodyID={"donations-title"}
+                                bodyHeader={"Donate"}
+                                bodyData={donateData}
+                            >
+                                {/* Wishlist Grid - Directly visible */}
+                                <WishlistGrid wishlist={wishlist} />
+                            </BodyText>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* Volunteer Section - no background */}
-            <div className="section-wrapper">
-                <div className="section-content">
-                    <div ref={volunteerRef} style={{opacity: 0}}>
-                        <BodyText
-                            bodyID={"volunteering-title"}
-                            bodyHeader={"Volunteer"}
-                            bodyData={volunteerData}
-                        />
+            {sectionToggle.volunteer === 1 && (
+                <div className="section-wrapper">
+                    <div className="section-content">
+                        <div ref={volunteerRef} style={{opacity: 0}}>
+                            <BodyText
+                                bodyID={"volunteering-title"}
+                                bodyHeader={"Volunteer"}
+                                bodyData={volunteerData}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* Footer with Stop Sign, Contact Info, and Address */}
             <Footer hoursData={hoursData} />
