@@ -3,7 +3,7 @@ from waitress import serve
 import sqlite3
 from flask_cors import CORS
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from functools import wraps
 from dotenv import load_dotenv
 from data_encryption import generate_token, hash_token, verify_token, verify_password
@@ -72,7 +72,7 @@ def verify_user_auth(user_id, auth_token):
     
     if expiration_str:
         expiration_dt = datetime.fromisoformat(expiration_str)
-        if datetime.utcnow() > expiration_dt:
+        if datetime.now(timezone.utc) > expiration_dt:
             return False
     
     return True
@@ -93,7 +93,7 @@ def verify_page_token(user_id, page_token):
     
     if expiration_str:
         expiration_dt = datetime.fromisoformat(expiration_str)
-        if datetime.utcnow() > expiration_dt:
+        if datetime.now(timezone.utc) > expiration_dt:
             return False
     
     return True
@@ -217,7 +217,7 @@ def login():
             
             auth_token = generate_token(32)
             auth_token_hash = hash_token(auth_token)
-            expiration_time = datetime.utcnow() + timedelta(days=30)
+            expiration_time = datetime.now(timezone.utc) + timedelta(days=30)
             expiration_str = expiration_time.isoformat()
             
             set_user_attribute(user_id, USER_ATTR_13345, auth_token_hash)
@@ -438,7 +438,7 @@ def generate_page_token(user_id):
     try:
         page_token = generate_token(32)
         page_token_hash = hash_token(page_token)
-        expiration_time = datetime.utcnow() + timedelta(hours=24)
+        expiration_time = datetime.now(timezone.utc) + timedelta(hours=24)
         expiration_str = expiration_time.isoformat()
         
         set_user_attribute(user_id, USER_ATTR_16767, page_token_hash)
